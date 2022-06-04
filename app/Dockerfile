@@ -1,9 +1,9 @@
 FROM node:17 as builder
 
 WORKDIR /usr
-COPY app/package.json ./
-COPY app/tsconfig.json ./
-COPY app/src ./src
+COPY package.json ./
+COPY tsconfig.json ./
+COPY src ./src
 RUN ls -a
 RUN npm install
 RUN npm run build
@@ -11,7 +11,7 @@ RUN npm run build
 
 FROM node:17 
 WORKDIR /usr
-COPY app/package.json ./
+COPY package.json ./
 RUN npm install --only=production
 COPY --from=0 /usr/dist .
 RUN npm install pm2 -g
