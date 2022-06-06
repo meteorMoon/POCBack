@@ -1,0 +1,63 @@
+import {Request,Response} from 'express'
+import { QueryResult } from 'pg';
+
+import {pool} from '../database'
+
+
+export const getUsers=async (req: Request,resp: Response): Promise<Response> => {
+    try{
+        const response:QueryResult=await pool.query('SELECT * FROM users');
+        console.log(response.rows);
+        return resp.status(200).json(response.rows);
+    }
+    catch(e){
+        return resp.status(500).json({
+            message:'Error',
+            error:e
+        });
+    }
+
+}
+
+export const getUserById= async (req:Request,resp:Response): Promise<Response> =>{
+    const idUser= parseInt(req.params.id)
+    const response:QueryResult=await pool.query('select * from users where id=$1',[idUser])
+    return resp.json(response.rows)
+}
+
+
+export const createUser= async (req:Request,resp:Response): Promise<Response> =>{
+    const {email,name}=req.body
+    console.log(name,email)
+    const response:QueryResult=await pool.query('insert into users(email,name) values($1,$2)',[email,name])
+    return resp.json({
+        "message":"creado",
+        "user":{
+            "name":name,
+            "email":email
+        }
+    })
+}
+
+export const deleteUser= async (req:Request,resp:Response): Promise<Response> =>{
+    console.log("delete user id")
+    const idUser= parseInt(req.params.id)
+    const response:QueryResult=await pool.query('delete from users where id=$1',[idUser])
+    return resp.json({
+        "message":"eliminado"
+    })
+}
+
+
+export const updateUserById= async (req:Request,resp:Response): Promise<Response> =>{
+    const id=parseInt(req.params.id)
+    const {email,name}=req.body
+    const response:QueryResult=await pool.query('update users set email=$1,name=$2 where id=$3',[email,name,id])
+    return resp.json({
+        "message":"actualizado",
+        "user":{
+            "name":name,
+            "email":email
+        }
+    })
+}
