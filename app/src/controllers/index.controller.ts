@@ -1,7 +1,9 @@
 import {Request,Response} from 'express'
 import { QueryResult } from 'pg';
-
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import {pool} from '../database'
+import { v4  } from 'uuid';
 
 
 export const getUsers=async (req: Request,resp: Response): Promise<Response> => {
@@ -19,6 +21,9 @@ export const getUsers=async (req: Request,resp: Response): Promise<Response> => 
 
 }
 
+
+
+
 export const getUserById= async (req:Request,resp:Response): Promise<Response> =>{
     const idUser= parseInt(req.params.id)
     const response:QueryResult=await pool.query('select * from users where id=$1',[idUser])
@@ -26,10 +31,14 @@ export const getUserById= async (req:Request,resp:Response): Promise<Response> =
 }
 
 
+
 export const createUser= async (req:Request,resp:Response): Promise<Response> =>{
-    const {email,name}=req.body
+    const {email,name,password}=req.body
     console.log(name,email)
-    const response:QueryResult=await pool.query('insert into users(email,name) values($1,$2)',[email,name])
+    //====hash password====
+    const encryptedPassword:string=await bcrypt.hash(password,10);
+    const uuid:string=v4()
+    const response:QueryResult=await pool.query('insert into users(email,name,password,uuid) values($1,$2,$3,$4)',[email,name,encryptedPassword,uuid])
     return resp.json({
         "message":"creado",
         "user":{
@@ -37,6 +46,26 @@ export const createUser= async (req:Request,resp:Response): Promise<Response> =>
             "email":email
         }
     })
+
+}
+
+
+export const loginUser= async(req:Request,resp:Response): Promise<Response> =>{
+    const {email,password}=req.body
+    const response:QueryResult=await pool.query('select * from users where email=$1',[email])
+    const passwordHash=response.rows[0].password
+    const isMatch=await bcrypt.compare(password,passwordHash)
+    if(isMatch){
+        const token=await jwt.sign({_id:response.rows[0].uuid},"secreto",{expiresIn:'1h'})
+        return resp.header('auth-token',token).json({
+            "message":"ok"
+        })
+    }
+    else{
+        return resp.json({
+            "message":"error"
+        })
+    }
 }
 
 export const deleteUser= async (req:Request,resp:Response): Promise<Response> =>{
@@ -47,6 +76,8 @@ export const deleteUser= async (req:Request,resp:Response): Promise<Response> =>
         "message":"eliminado"
     })
 }
+
+
 
 
 export const updateUserById= async (req:Request,resp:Response): Promise<Response> =>{
