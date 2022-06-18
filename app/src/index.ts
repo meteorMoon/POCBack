@@ -1,10 +1,8 @@
 import express from "express";
 
-
 const app=express();
 
 import indexRoutes  from './routes/index';
-
 
 //middlewares
 app.use(express.json());
