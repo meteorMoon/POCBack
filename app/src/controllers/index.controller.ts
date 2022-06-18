@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken'
 import {pool} from '../database'
 import { v4  } from 'uuid';
 
-
 export const getUsers=async (req: Request,resp: Response): Promise<Response> => {
     try{
         const response:QueryResult=await pool.query('SELECT * FROM users');
@@ -21,16 +20,11 @@ export const getUsers=async (req: Request,resp: Response): Promise<Response> => 
 
 }
 
-
-
-
 export const getUserById= async (req:Request,resp:Response): Promise<Response> =>{
     const idUser= parseInt(req.params.id)
     const response:QueryResult=await pool.query('select * from users where id=$1',[idUser])
     return resp.json(response.rows)
 }
-
-
 
 export const createUser= async (req:Request,resp:Response): Promise<Response> =>{
     const {email,name,password}=req.body
@@ -48,7 +42,6 @@ export const createUser= async (req:Request,resp:Response): Promise<Response> =>
     })
 
 }
-
 
 export const loginUser= async(req:Request,resp:Response): Promise<Response> =>{
     const {email,password}=req.body
@@ -76,9 +69,6 @@ export const deleteUser= async (req:Request,resp:Response): Promise<Response> =>
         "message":"eliminado"
     })
 }
-
-
-
 
 export const updateUserById= async (req:Request,resp:Response): Promise<Response> =>{
     const id=parseInt(req.params.id)
