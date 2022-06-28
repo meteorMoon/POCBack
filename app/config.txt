@@ -1,4 +1,0 @@
-https://www.youtube.com/watch?v=1UcLoOD1lRM&ab_channel=BenAwad
-
-npm install -D ts-node
-yarn add -D ts-node-dev
