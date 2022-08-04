@@ -13,7 +13,7 @@ export const TokenValidation=(req:Request,res:Response,next:NextFunction)=>{
     if(!token) return res.status(400).send("access denied");
 
     const payload =jwt.verify(token, 'secreto') as IPayload;
-    //req.userId=payload._id;
+    req.userId=payload._id;
 
     next()
 }
