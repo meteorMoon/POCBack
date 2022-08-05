@@ -1,9 +1,49 @@
-create table users(
-    id serial primary key,
-    uuid varchar(36) not null,
-    name varchar(50),
-    password text,
-    email text
+
+CREATE TABLE users (
+	id_user serial PRIMARY KEY,
+	email VARCHAR ( 50 )  NOT NULL,
+	password VARCHAR ( 50 ) NOT NULL,
+	name VARCHAR ( 255 )  NOT NULL,
+	last_name VARCHAR ( 255 )  NOT NULL,
+	created_on TIMESTAMP NOT NULL DEFAULT now(),
+    last_login TIMESTAMP,
+	fk_roles int NOT NULL,
+	fk_organizations int NOT NULL,
+    status CHAR(1) 	NOT NULL,
+	CONSTRAINT fk_roles
+      FOREIGN KEY(fk_roles) 
+	 REFERENCES roles(id_role),
+	CONSTRAINT fk_organizations
+      FOREIGN KEY(fk_organizations) 
+	 REFERENCES organization(id_organization)
 );
 
-insert into users(uuid, name, password,email) values ('f5086255-c946-4e86-84af-c1e8db4ab733','admin','$2a$10$5tzvcBq07JWWg/Baso8wou69Fhcd0crk/aatSP4TiRcU649CeH79a','joe1@pepito.com')
+CREATE TABLE organization (
+	id_organization serial PRIMARY KEY,
+	name_organization VARCHAR ( 255 )  NOT NULL,
+    status CHAR(1) 	NOT NULL
+);
+
+CREATE TABLE roles (
+	id_role serial PRIMARY KEY,
+	name_role VARCHAR ( 255 )  NOT NULL,
+    status CHAR(1) 	NOT NULL
+);
+
+CREATE TABLE modules_roles (
+	id_role int PRIMARY KEY,
+	id_module int PRIMARY KEY,
+	access VARCHAR ( 255 )  NOT NULL,
+    status CHAR(1) 	NOT NULL,
+	CONSTRAINT fk_role
+      FOREIGN KEY(id_role) 
+	 REFERENCES roles(id_role),
+	CONSTRAINT fk_module
+      FOREIGN KEY(id_module) 
+	 REFERENCES modules(id_module)
+);
+CREATE TABLE modules (
+	id_module serial PRIMARY KEY,
+	name_module VARCHAR ( 255 )  NOT NULL,
+    status CHAR(1) 	NOT NULL
+);
