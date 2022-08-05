@@ -9,10 +9,10 @@ interface IPayload{
 
 export const TokenValidation=(req:Request,res:Response,next:NextFunction)=>{
 
-    const token=req.header('auth-token');
-    if(!token) return res.status(400).send("access denied");
+    const token=req.header("auth-token");
+    if(!token) {return res.status(400).send("access denied");}
 
-    const payload =jwt.verify(token, 'secreto') as IPayload;
+    const payload =jwt.verify(token, "secreto") as IPayload;
     //the token id will be fixed on saturday
     //req.userId=payload._id;
 
