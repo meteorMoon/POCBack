@@ -9,8 +9,15 @@
     "test": "ts-node .\\node_modules\\jasmine\\bin\\jasmine",
     "lint": "eslint .  --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
-    "coverage": "nyc npm run test",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "test:coverage": "npm run cover:unit && npm run cover:report",
+    "test:coveragehtml": "npm run cover:unit && npm run cover:reporthtml",
+    "cover:unit": "nyc npm run test",
+    "cover:report": "nyc report --reporter=lcov --reporter=text --report-dir='./jscoverage' --statements 90 --functions 90 --lines 90",
+    "cover:reporthtml": "nyc report --reporter=html --report-dir='./jscoverage' --statements 90 --functions 90 --lines 90"
+  },
+  "nyc": {
+    "exclude": []
   },
   "keywords": [],
   "author": "",
@@ -30,6 +37,7 @@
     "eslint": "^8.21.0",
     "install": "^0.13.0",
     "jasmine": "^4.3.0",
+    "jsdoc": "^3.6.11",
     "nyc": "^15.1.0",
     "ts-node": "^10.8.0",
     "ts-node-dev": "^2.0.0",
