@@ -41,6 +41,8 @@ export const createUser = async (req:Request, resp:Response): Promise<Response> 
 };
 
 export const loginUser = async (req:Request, resp:Response): Promise<Response> => {
+
+try {
   const { email, password } = req.body;
   const response:QueryResult = await pool.query("select * from users where email=$1", [email]);
   const passwordHash = response.rows[0].password;
@@ -55,6 +57,12 @@ export const loginUser = async (req:Request, resp:Response): Promise<Response> =
       message: "error"
     });
   }
+
+} catch (error) {
+  return resp.json({
+      message: "error"
+    });
+}
 };
 
 export const deleteUser = async (req:Request, resp:Response): Promise<Response> => {
