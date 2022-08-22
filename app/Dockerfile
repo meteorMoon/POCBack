@@ -3,6 +3,7 @@ FROM node:17 as builder
 WORKDIR /usr
 COPY package.json ./
 COPY tsconfig.json ./
+COPY @types ./@types
 COPY src ./src
 RUN ls -a
 RUN npm install

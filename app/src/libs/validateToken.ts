@@ -14,7 +14,7 @@ export const TokenValidation=(req:Request,res:Response,next:NextFunction)=>{
 
     const payload =jwt.verify(token, "secreto") as IPayload;
     //the token id will be fixed on saturday
-    //req.userId=payload._id;
+    req.userId=payload._id;
 
     next()
 }

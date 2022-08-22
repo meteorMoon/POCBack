@@ -19,6 +19,7 @@ export const getUsers = async (req: Request, resp: Response): Promise<Response> 
 };
 
 export const getUserById = async (req:Request, resp:Response): Promise<Response> => {
+  console.log(req.userId)
   const idUser = parseInt(req.params.id);
   const response:QueryResult = await pool.query("select * from users where id=$1", [idUser]);
   return resp.json(response.rows);
