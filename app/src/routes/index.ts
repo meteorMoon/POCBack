@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { getUsers, getUserById, createUser, deleteUser, updateUserById, loginUser } from "../controllers/index.controller";
-import { addProductTocart,deletePorductToCart,payBill,listProducts} from "../controllers/products.controllers";
+import { addProductTocart,deletePorductToCart,payBill,listProducts,showCart} from "../controllers/products.controllers";
 import { TokenValidation } from "../libs/validateToken";
 
 const router = Router();
@@ -19,7 +19,8 @@ router.delete("/users/:id", deleteUser);
 
 router.get("/listProducts", listProducts);
 router.post("/addproduct",TokenValidation, addProductTocart);
-router.get("/deleteproduct", deletePorductToCart);
-router.get("/payBill", payBill);
+router.get("/listProducts",TokenValidation ,showCart);
+router.get("/deleteproduct",TokenValidation, deletePorductToCart);
+router.get("/payBill", TokenValidation,payBill);
 
 export default router;

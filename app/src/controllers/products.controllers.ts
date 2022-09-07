@@ -21,14 +21,11 @@ export const listProducts=async (req: Request, resp: Response): Promise<Response
 
 export const addProductTocart=async (req: Request, resp: Response): Promise<Response> => {
   try {
-    console.log("aca llego 0")
     const response:QueryResult = await pool.query(`select * from factura f,users u where u.id_user=f.id_user and u.id_user=${req.userId} and f.ispaid=false limit 1`);
     const result:Number=response.rows.length;
     if(result == 0) {
-      console.log(`${req.userId}`)
       await pool.query(`insert into factura(id_user,fecha,ispaid) values(${req.userId},'now()',false )`);
     }
-    
     await pool.query(`
                     insert into details(id_factura,id_user,id_producto,cantidad)
                     select id_factura,u.id_user,${req.params.id_producto} as product,${req.params.cantidad} as cantidad from factura f,users u 
@@ -46,6 +43,12 @@ export const addProductTocart=async (req: Request, resp: Response): Promise<Resp
   }
 };
 
+
+export const showCart=async (req: Request, resp: Response): Promise<Response> => {
+  return resp.status(200).json({
+    message: "mostrar productos"
+  });
+}
 export const deletePorductToCart=async (req: Request, resp: Response): Promise<Response> => {
     return resp.status(200).json({
         message: "quitar x producto"
