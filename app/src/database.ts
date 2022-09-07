@@ -5,7 +5,7 @@ export const pool = new Pool({
   //uncomment for use without docker with database in localhost
   //host: "localhost",
   // comment for use without docker
-  host:"postgres",
+  host:"localhost",
   database: "typescriptdatabase",
   password: "mysecretpassword",
   port: 5432

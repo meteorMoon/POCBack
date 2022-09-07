@@ -49,7 +49,7 @@ try {
   const passwordHash = response.rows[0].password;
   const isMatch = await bcrypt.compare(password, passwordHash);
   if (isMatch) {
-    const token = await jwt.sign({ _id: response.rows[0].uuid }, "secreto", { expiresIn: "1h" });
+    const token = await jwt.sign({ _id: response.rows[0].id_user }, "secreto", { expiresIn: "1h" });
     return resp.header("auth-token", token).json({
       message: "ok"
     });
