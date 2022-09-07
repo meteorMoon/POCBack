@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { getUsers, getUserById, createUser, deleteUser, updateUserById, loginUser } from "../controllers/index.controller";
-import { addProductTocart,deletePorductToCart,payBill} from "../controllers/products.controllers";
+import { addProductTocart,deletePorductToCart,payBill,listProducts,showCart} from "../controllers/products.controllers";
 import { TokenValidation } from "../libs/validateToken";
 
 const router = Router();
@@ -15,10 +15,12 @@ router.post("/users", createUser);
 router.put("/users/:id", updateUserById);
 router.delete("/users/:id", deleteUser);
 
-//bills crud
+//products buy crud
 
-router.get("/addproduct", addProductTocart);
-router.get("/deleteproduct", deletePorductToCart);
-router.get("/payBill", payBill);
+router.get("/listproducts", listProducts);
+router.post("/addproduct",TokenValidation, addProductTocart);
+router.get("/showcart",TokenValidation ,showCart);
+router.get("/deleteproduct",TokenValidation, deletePorductToCart);
+router.get("/payBill", TokenValidation,payBill);
 
 export default router;

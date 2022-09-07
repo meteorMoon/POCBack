@@ -19,7 +19,6 @@ export const getUsers = async (req: Request, resp: Response): Promise<Response> 
 };
 
 export const getUserById = async (req:Request, resp:Response): Promise<Response> => {
-  console.log(req.userId)
   const idUser = parseInt(req.params.id);
   const response:QueryResult = await pool.query("select * from users where id=$1", [idUser]);
   return resp.json(response.rows);
@@ -27,7 +26,6 @@ export const getUserById = async (req:Request, resp:Response): Promise<Response>
 
 export const createUser = async (req:Request, resp:Response): Promise<Response> => {
   const { email, name, password } = req.body;
-  console.log(name, email);
   //= ===hash password====
   const encryptedPassword:string = await bcrypt.hash(password, 10);
   const uuid:string = v4();
@@ -49,7 +47,7 @@ try {
   const passwordHash = response.rows[0].password;
   const isMatch = await bcrypt.compare(password, passwordHash);
   if (isMatch) {
-    const token = await jwt.sign({ _id: response.rows[0].uuid }, "secreto", { expiresIn: "1h" });
+    const token = await jwt.sign({ _id: response.rows[0].id_user }, "secreto", { expiresIn: "1h" });
     return resp.header("auth-token", token).json({
       message: "ok"
     });
