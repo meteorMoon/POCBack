@@ -5,7 +5,7 @@ import { pool } from "../database";
 
 export const listProducts=async (req: Request, resp: Response): Promise<Response> => {
   try {
-    const response:QueryResult = await pool.query("SELECT * FROM producto");
+    const response:QueryResult = await pool.query("SELECT * FROM product");
     console.log(response.rows);
     return resp.status(200).json(response.rows);
   } catch (e) {
@@ -19,7 +19,7 @@ export const listProducts=async (req: Request, resp: Response): Promise<Response
 export const addProductTocart=async (req: Request, resp: Response): Promise<Response> => {
   try {
     //check if product already exists
-    const product= await (await pool.query("SELECT id_producto FROM producto p WHERE id_producto=$1",[req.body.id_producto])).rowCount;
+    const product= await (await pool.query("SELECT id_product FROM product p WHERE id_product=$1",[req.body.id_product])).rowCount;
     if(product == 0) {
       return resp.status(404).json({"message":"product not found"});
     }
@@ -33,13 +33,13 @@ export const addProductTocart=async (req: Request, resp: Response): Promise<Resp
 
     // insert product into a bill
     await pool.query(`
-                    insert into details(id_factura,id_producto,cantidad)
+                    insert into details(id_factura,id_product,cantidad)
                     select id_factura,$1,$2 from factura f,users u 
                     where 
                     u.id_user=f.id_user and 
                     f.ispaid=false and 
                     u.id_user=$3;
-    `,[req.body.id_producto,req.body.cantidad,req.userId]);
+    `,[req.body.id_product,req.body.cantidad,req.userId]);
     return resp.status(200).json({"result":"success"});
   } catch (e) {
     return resp.status(500).json({
@@ -52,18 +52,18 @@ export const addProductTocart=async (req: Request, resp: Response): Promise<Resp
 
 export const showCart=async (req: Request, resp: Response): Promise<Response> => {
   return resp.status(200).json({
-    message: "mostrar productos"
+    message: "test"
   });
 }
 export const deletePorductToCart=async (req: Request, resp: Response): Promise<Response> => {
     return resp.status(200).json({
-        message: "quitar x producto"
+        message: "test"
       });
 };
 
 export const payBill=async (req: Request, resp: Response): Promise<Response> => {
     return resp.status(200).json({
-        message: "validar pago"
+        message: "test"
       });
 };
 
