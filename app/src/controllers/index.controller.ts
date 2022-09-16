@@ -31,7 +31,7 @@ export const createUser = async (req:Request, resp:Response): Promise<Response> 
   const uuid:string = v4();
   const response:QueryResult = await pool.query("insert into users(email,name,password,uuid) values($1,$2,$3,$4)", [email, name, encryptedPassword, uuid]);
   return resp.json({
-    message: "creado",
+    message: "created",
     user: {
       name,
       email
@@ -69,7 +69,7 @@ export const deleteUser = async (req:Request, resp:Response): Promise<Response> 
   const idUser = parseInt(req.params.id);
   const response:QueryResult = await pool.query("delete from users where id=$1", [idUser]);
   return resp.json({
-    message: "eliminado"
+    message: "deleted"
   });
 };
 
@@ -78,7 +78,7 @@ export const updateUserById = async (req:Request, resp:Response): Promise<Respon
   const { email, name } = req.body;
   const response:QueryResult = await pool.query("update users set email=$1,name=$2 where id=$3", [email, name, id]);
   return resp.json({
-    message: "actualizado",
+    message: "update",
     user: {
       name,
       email
