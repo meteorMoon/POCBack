@@ -7,7 +7,12 @@ import { TokenValidation } from "../libs/validateToken";
 const router = Router();
 
 //users crud
-
+/**
+ * @swagger
+ * /tasks:
+ *  get:
+ *   summary: uwux3
+ * */
 router.get("/users", getUsers);
 router.post("/login", loginUser);
 router.get("/users/:id", TokenValidation, getUserById);
