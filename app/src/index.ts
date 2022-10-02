@@ -2,6 +2,7 @@ import express from "express";
 import swaggerUI from "swagger-ui-express"
 import swaggerJsDocs from "swagger-jsdoc"
 import { options } from "./swaggetOpts";
+import cors from 'cors'
 
 import indexRoutes from "./routes/index";
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 const spec=swaggerJsDocs(options)
 
+app.use(cors())
 app.use(indexRoutes);
 app.use('/docs',swaggerUI.serve,swaggerUI.setup(spec));
 
