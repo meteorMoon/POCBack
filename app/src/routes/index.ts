@@ -9,9 +9,43 @@ const router = Router();
 //users crud
 /**
  * @swagger
- * /tasks:
- *  get:
- *   summary: uwux3
+ * components:
+ *  schemas:
+ *   User:
+ *     properties:
+ *       id:
+ *         type: integer
+ *       name:
+ *         type: string
+ * 
+ * paths:
+ *  /tasks:
+ *   get:
+ *    summary: uwux3
+ * 
+ *  /users/{id}:
+ *   get:
+ *    parameters:
+ *     - in: path
+ *       name: id   # Note the name is the same as in the path
+ *       required: true
+ *       schema:
+ *        type: integer
+ *        minimum: 1
+ *    description: The user ID
+ * 
+ *  /login:
+ *   post:
+ *    requestBody:
+ *     description: the credentials of the users
+ *     required: true
+ *     content:
+ *      application/json:
+ *       "schema": {
+ *         "$ref": "#/components/schemas/User"
+ *       }
+ * 
+ *   
  * */
 router.get("/users", getUsers);
 router.post("/login", loginUser);
