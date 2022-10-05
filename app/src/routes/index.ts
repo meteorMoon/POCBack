@@ -36,6 +36,11 @@ const router = Router();
  * 
  *  /login:
  *   post:
+ *    parameters:
+ *     - in: query
+ *       name: X-Request-ID
+ *       schema:
+ *         type: string
  *    requestBody:
  *     description: the credentials of the users
  *     required: true
