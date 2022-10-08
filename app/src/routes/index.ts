@@ -13,16 +13,22 @@ const router = Router();
  *  schemas:
  *   User:
  *     properties:
- *       id:
- *         type: integer
  *       name:
  *         type: string
- * 
+ *       password:
+ *         type: string
+ *       email:
+ *         type: string
+ *    
+ *   addproduct:
+ *     properties:
+ *       id_producto:
+ *         type: integer
+ *       cantidad:
+ *         type: integer
+ *     
+ *       
  * paths:
- *  /tasks:
- *   get:
- *    summary: uwux3
- * 
  *  /users/{id}:
  *   get:
  *    parameters:
@@ -36,19 +42,35 @@ const router = Router();
  * 
  *  /login:
  *   post:
- *    parameters:
- *     - in: query
- *       name: X-Request-ID
- *       schema:
- *         type: string
+ *    summary: with the credentials of the user returns the token for the next petitions in case the token is wrong then it return error
  *    requestBody:
- *     description: the credentials of the users
  *     required: true
  *     content:
  *      application/json:
  *       "schema": {
  *         "$ref": "#/components/schemas/User"
  *       }
+ * 
+ *  /listproducts:
+ *   get:
+ *    summary: return al products in db
+ *  
+ *  /addproduct:
+ *   post:
+ *    summary: add product to cart if the cart doesnt exist create one
+ *    parameters:
+ *     - in: headers
+ *       name: auth-token
+ *       schema:
+ *         type: string
+ *    requestBody: 
+ *     required: true
+ *     content:
+ *      application/json:
+ *       schema: {
+ *        "$ref": "#/components/schemas/addproduct"
+ *        }
+ *    
  * 
  *   
  * */
