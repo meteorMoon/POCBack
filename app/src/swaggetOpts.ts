@@ -3,7 +3,7 @@ export const optionsApi={
     definition:{
         openapi:"3.0.0",
         info:{
-            title:"uwu",
+            title:"store microserv",
             version:"1.0.0",
             description:"uwu v1.0"
         },
