@@ -20,12 +20,6 @@ const router = Router();
  *       email:
  *         type: string
  *    
- *   addproduct:
- *     properties:
- *       id_producto:
- *         type: integer
- *       cantidad:
- *         type: integer
  *     
  *       
  * paths:
@@ -63,16 +57,36 @@ const router = Router();
  *       name: auth-token
  *       schema:
  *         type: string
- *    requestBody: 
- *     required: true
- *     content:
- *      application/json:
- *       schema: {
- *        "$ref": "#/components/schemas/addproduct"
- *        }
+ *     - in: body
+ *       name: addproduct  
+ *       schema: 
+ *        type: object
+ *        required:
+ *          - id_producto
+ *          - cantidad
+ *        properties:
+ *          id_producto:
+ *            type: string
+ *          cantidad:
+ *            type: number
  *    
+ *  /showcart:
+ *   get:
+ *    summary: show the products inside the cart
+ *    parameters:
+ *     - in: headers
+ *       name: auth-token
+ *       schema:
+ *        type: string
  * 
- *   
+ *  /deleteproduct:
+ *    get:
+ *     parameters:
+ *      - in: headers
+ *        name: auth-token
+ *        schema:
+ *          type: string
+ * 
  * */
 router.get("/users", getUsers);
 router.post("/login", loginUser);

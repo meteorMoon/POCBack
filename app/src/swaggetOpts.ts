@@ -1,4 +1,5 @@
-export const options={
+export const optionsApi={
+    
     definition:{
         openapi:"3.0.0",
         info:{
@@ -13,3 +14,9 @@ export const options={
     ]},
     apis:["src/routes/*.ts"]
 }
+
+export const optionsSwagger = {
+    swaggerOptions: {
+      supportedSubmitMethods: []
+     }
+  };
