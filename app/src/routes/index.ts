@@ -86,6 +86,22 @@ const router = Router();
  *        name: auth-token
  *        schema:
  *          type: string
+ *      - in: body
+ *        name: delete product
+ *        schema:
+ *          type: object
+ *          required:
+ *            - id_product
+ *          properties:
+ *           id_product:
+ *            type: number
+ *  /payBill:
+ *    get:
+ *     parameters:
+ *      - in: headers
+ *        name: auth-token
+ *        schema:
+ *          type: string
  * 
  * */
 router.get("/users", getUsers);
