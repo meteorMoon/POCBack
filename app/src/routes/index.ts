@@ -37,13 +37,12 @@ const router = Router();
  *  /login:
  *   post:
  *    summary: with the credentials of the user returns the token for the next petitions in case the token is wrong then it return error
- *    requestBody:
- *     required: true
- *     content:
- *      application/json:
- *       "schema": {
- *         "$ref": "#/components/schemas/User"
- *       }
+ *    parameters:
+ *      - in: body
+ *        name: user
+ *        schema: 
+ *          "$ref": "#/components/schemas/User"
+ *        
  * 
  *  /listproducts:
  *   get:
