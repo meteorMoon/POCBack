@@ -5,14 +5,14 @@ export const optionsApi={
         info:{
             title:"store microserv",
             version:"1.0.0",
-            description:"uwu v1.0"
+            description:"u v1.0"
         },
     servers:[
         {
             url:"http://localhost:80"
         }
     ]},
-    apis:["src/routes/*.ts"]
+    apis:[`${__dirname}/routes/*.js`]
 }
 
 export const optionsSwagger = {
