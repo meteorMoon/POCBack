@@ -1,12 +1,12 @@
 import { Pool } from "pg";
 
 export const pool = new Pool({
-  user: "postgres",
+  user: "qxsclqen",
   //uncomment for use without docker with database in localhost
   //host: "localhost",
   // comment for use without docker
-  host:"postgres",
-  database: "typescriptdatabase",
-  password: "mysecretpassword",
+  host:"babar.db.elephantsql.com",
+  database: "qxsclqen",
+  password: "tmIY7rfVGMVwVeOQtYh-z8R6x5cUQQma",
   port: 5432
 });
